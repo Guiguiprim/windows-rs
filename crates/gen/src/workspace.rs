@@ -93,6 +93,7 @@ fn get_crate_winmds() -> Vec<File> {
 
     let mut result = vec![];
 
+    // Manifest directory of the crate calling `build!`
     if let Ok(dir) = std::env::var("CARGO_MANIFEST_DIR") {
         let mut dir: std::path::PathBuf = dir.into();
         dir.push(".windows");
@@ -100,19 +101,8 @@ fn get_crate_winmds() -> Vec<File> {
         push_dir(&mut result, &dir);
     }
 
-    let dir = std::env::var("PATH").expect("No `PATH` env variable set");
-    let end = dir.find(';').expect("Path not ending in `;`");
-    let mut dir: std::path::PathBuf = dir[..end].into();
-    dir.pop();
-    dir.pop();
-    dir.push(".windows");
-    dir.push("winmd");
-    push_dir(&mut result, &dir);
-
-    let mut dir: std::path::PathBuf = target_dir().into();
-    dir.push(".windows");
-    dir.push("winmd");
-    push_dir(&mut result, &dir);
+    // Manifest directory of windows-rs' windows_gen crate
+    push_dir(&mut result, &std::path::Path::new(winmd_path::WINMD_PATH));
 
     result
 }

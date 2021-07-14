@@ -12,6 +12,7 @@ mod squote;
 pub mod tables;
 mod to_ident;
 pub mod types;
+mod winmd_path;
 mod workspace;
 
 pub use gen::*;

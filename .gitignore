@@ -2,3 +2,4 @@ target
 Cargo.lock
 .vscode
 .vs
+/crates/gen/src/winmd_path.rs
